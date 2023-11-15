@@ -82,10 +82,10 @@ I know that she attended the SQL Symphony Concert 3 times in December 2017.
 -- For fb event table: *person_id, event_id, event_name, date
 -- To me, after trying, I think I need to use WITH to make a temp table for the event first
 WITH temp AS(
-SELECT * FROM facebook_event_checkin
+SELECT person_id, COUNT(*) FROM facebook_event_checkin -- Here, it could be COUNT(*) or COUNT(any col of the table)
 WHERE event_name == 'SQL Symphony Concert' AND
 date LIKE '201712%'
-GROUP BY person_id
+GROUP BY person_id 
 HAVING COUNT(*) == 3
 ) -- in aggregation, only HAVING is allowed but not WHERE. ALSO, I should group by first before using conditions
 --SELECT * FROM temp; -- 24556 or 99716. It worked!
@@ -99,9 +99,11 @@ WHERE drivers_license.height BETWEEN 65 AND 67
 AND
 drivers_license.hair_color == 'red'
 AND
-drivers_license.car_model == 'Model S'; -- If I want to be more precise, I can specify the car_make is Tesla, but no need here.
+drivers_license.car_make == 'Tesla'
+AND
+drivers_license.car_model == 'Model S';
 
 -- Final check
 INSERT INTO solution VALUES (1, 'Miranda Priestly');  
         SELECT value FROM solution; -- Done!
-        
+
